@@ -13,10 +13,6 @@ PS3BT PS3(&Btd);    // This will just create the instance
 //PS3BT PS3(&Btd, 0x00, 0x15, 0x83, 0x3D, 0x0A, 0x57);    // This will also store the bluetooth address -
 // this can be obtained from the dongle when running the sketch
 
-//bool printTemperature, printAngle;       //for measuring temperature NO USE
-
-Servo myservo;  // create servo object to control a servo
-int pos = 0;    // variable to store the servo position
 
 int motorSpeedA = 0;
 int motorSpeedB = 0;
@@ -101,7 +97,6 @@ void setup() {
   pinMode(in13, OUTPUT);
   pinMode(in14, OUTPUT);
   
-  myservo.attach(49);   //lid up/down
 }
 
 
@@ -425,14 +420,14 @@ void loop()
     analogWrite(enrotate,gripper_rotate);
 
     // LeftHaty is used for UP_DOWN gripper;
-    if (ly <= 115 && lx == 127)     //UP
+    if (ly <= 115 && (lx > 105 || lx < 145))     //UP
     { Serial.println("Gripper Up");
       digitalWrite(in9, LOW);  
       digitalWrite(in10, HIGH);  
       gripper_up_down = map(ly, 115, 0, 0, 255);
     }
 
-    else if (ly >= 140 && lx == 127)     //Down
+    else if (ly >= 140 && (lx > 105 || lx < 145))     //Down
     { Serial.println("Gripper Down");
       digitalWrite(in9, HIGH);
       digitalWrite(in10, LOW);
